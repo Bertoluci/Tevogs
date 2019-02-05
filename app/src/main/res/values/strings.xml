@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">Tevogs</string>
+    <string name="app_name">NfcConfig</string>
+    <string name="btnWrite">Write tag</string>
+    <string name="btnRead">Read tag</string>
+    <string name="approachTag">Approach an NFC Tag</string>
+    <string name="btnEdit">Edit items</string>
+    <string name="auth_key">authkey</string>
+    <string name="client_id">clientId</string>
+    <string name="omponent_id">componentId</string>
+    <string name="distribution_port">distributionPort</string>
+    <string name="distribution_type">distributionType</string>
+    <string name="multicast_group">multicastGroup</string>
+    <string name="server_ip_v4">serverIPv4</string>
+    <string name="wifi_password">wifiPassword</string>
+    <string name="wifi_SSID">wifiSSID</string>
+    <string name="btn_menu">Menu</string>
+    <string name="btn_write">Write</string>
 </resources>
