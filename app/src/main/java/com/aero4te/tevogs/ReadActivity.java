@@ -1,6 +1,7 @@
 package com.aero4te.tevogs;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -8,6 +9,7 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -21,8 +23,16 @@ import com.aero4te.tevogs.model.CipherKey;
 import com.aero4te.tevogs.model.CipherUtil;
 import com.aero4te.tevogs.model.HeaderRecordWrapper;
 import com.aero4te.tevogs.model.MessageWrapper;
+import com.aero4te.tevogs.model.StorageUtil;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.Arrays;
 
 public class ReadActivity extends AppCompatActivity {
@@ -161,8 +171,11 @@ public class ReadActivity extends AppCompatActivity {
                 }
                 //</editor-fold>
 
-                if (headerRecordWrapper != null & bodyRecordWrapper != null) {
-                    messageWrapper = new MessageWrapper(headerRecordWrapper, bodyRecordWrapper);
+                if (headerRecordWrapper != null & bodyRecordWrapper != null && aarPackageName != null) {
+                    messageWrapper = new MessageWrapper(headerRecordWrapper, bodyRecordWrapper, aarPackageName);
+                    String content = messageWrapper.toString();
+                    StorageUtil storageUtil = new StorageUtil();
+                    storageUtil.save(this, "nfc", "config.txt", content);
                 }
             } else {
                 Toast.makeText(this, "Ndef message not found.", Toast.LENGTH_LONG).show();

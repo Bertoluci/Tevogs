@@ -8,12 +8,19 @@ public class MessageWrapper extends RecordWrapper implements Serializable {
     private HeaderRecordWrapper headerRecordWrapper;
 
     private BodyRecordWrapper bodyRecordWrapper;
+
+    private String aarPackageName;
     //</editor-fold>
 
     //<editor-fold desc="Constructors">
     public MessageWrapper(HeaderRecordWrapper headerRecordWrapper, BodyRecordWrapper bodyRecordWrapper) {
-        headerRecordWrapper = headerRecordWrapper;
-        bodyRecordWrapper = bodyRecordWrapper;
+        this.headerRecordWrapper = headerRecordWrapper;
+        this.bodyRecordWrapper = bodyRecordWrapper;
+    }
+
+    public MessageWrapper(HeaderRecordWrapper headerRecordWrapper, BodyRecordWrapper bodyRecordWrapper, String aarPackageName) {
+        this(headerRecordWrapper, bodyRecordWrapper);
+        this.aarPackageName = aarPackageName;
     }
 
     public MessageWrapper(String json) {
@@ -33,6 +40,10 @@ public class MessageWrapper extends RecordWrapper implements Serializable {
 
     public BodyRecordWrapper getBodyRecordWrapper() {
         return bodyRecordWrapper;
+    }
+
+    public String getAarPackageName() {
+        return aarPackageName;
     }
     //</editor-fold>
 }
