@@ -2,7 +2,7 @@ package com.aero4te.tevogs.model;
 
 import java.io.Serializable;
 
-public class MesaageWrwpper extends RecordWrapper implements Serializable {
+public class MessageWrapper extends RecordWrapper implements Serializable {
 
     //<editor-fold desc="Properties">
     private HeaderRecordWrapper headerRecordWrapper;
@@ -11,19 +11,19 @@ public class MesaageWrwpper extends RecordWrapper implements Serializable {
     //</editor-fold>
 
     //<editor-fold desc="Constructors">
-    public MesaageWrwpper(HeaderRecordWrapper headerRecordWrapper, BodyRecordWrapper bodyRecordWrapper) {
+    public MessageWrapper(HeaderRecordWrapper headerRecordWrapper, BodyRecordWrapper bodyRecordWrapper) {
         headerRecordWrapper = headerRecordWrapper;
         bodyRecordWrapper = bodyRecordWrapper;
     }
 
-    public MesaageWrwpper (String json) {
+    public MessageWrapper(String json) {
         this();
-        MesaageWrwpper mw = (MesaageWrwpper) fromJson(json);
+        MessageWrapper mw = (MessageWrapper) fromJson(json);
         headerRecordWrapper = mw.getHeaderRecordWrapper();
         bodyRecordWrapper = mw.getBodyRecordWrapper();
     }
 
-    private MesaageWrwpper() {}
+    private MessageWrapper() {}
     //</editor-fold>
 
     //<editor-fold desc="Getters">
