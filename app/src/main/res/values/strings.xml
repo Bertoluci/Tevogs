@@ -20,4 +20,5 @@
     <string name="game_over">Game over</string>
     <string name="visit_website">Visit website</string>
     <string name="btn_clean">Clean log</string>
+    <string name="no_key">Chybí šifrovací klíč.</string>
 </resources>
