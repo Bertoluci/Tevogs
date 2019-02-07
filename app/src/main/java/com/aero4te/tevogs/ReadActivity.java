@@ -22,6 +22,8 @@ import com.aero4te.tevogs.model.BodyRecordWrapper;
 import com.aero4te.tevogs.model.CipherKey;
 import com.aero4te.tevogs.model.CipherUtil;
 import com.aero4te.tevogs.model.HeaderRecordWrapper;
+import com.aero4te.tevogs.model.InternalStorageUtil;
+import com.aero4te.tevogs.model.KnownFile;
 import com.aero4te.tevogs.model.MessageWrapper;
 import com.aero4te.tevogs.model.StorageUtil;
 
@@ -174,8 +176,8 @@ public class ReadActivity extends AppCompatActivity {
                 if (headerRecordWrapper != null & bodyRecordWrapper != null && aarPackageName != null) {
                     messageWrapper = new MessageWrapper(headerRecordWrapper, bodyRecordWrapper, aarPackageName);
                     String content = messageWrapper.toString();
-                    StorageUtil storageUtil = new StorageUtil();
-                    storageUtil.save(this, "nfc", "config.txt", content);
+                    InternalStorageUtil storage = new InternalStorageUtil(this);
+                    storage.save(content.toString(), KnownFile.NFC_LAST_CONFIG);
                 }
             } else {
                 Toast.makeText(this, "Ndef message not found.", Toast.LENGTH_LONG).show();
