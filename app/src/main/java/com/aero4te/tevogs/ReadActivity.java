@@ -97,6 +97,10 @@ public class ReadActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         if (intent.hasExtra(NfcAdapter.EXTRA_TAG)) {
+            if (CipherKey.key == null) {
+                Toast.makeText(this, getString(R.string.no_key), Toast.LENGTH_LONG).show();
+                return;
+            }
             NdefMessage ndefMessage = null;
             Parcelable[] extra = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
             if (extra != null && extra.length > 0) {
@@ -215,6 +219,9 @@ public class ReadActivity extends AppCompatActivity {
 
     public void handleBtnWriteOnClick(View view) {
         Intent writeIntent = new Intent(this, WriteActivity.class);
+        if (messageWrapper != null) {
+            writeIntent.putExtra("json", messageWrapper.toString());
+        }
         startActivity(writeIntent);
     }
     //</editor-fold>

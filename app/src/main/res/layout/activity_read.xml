@@ -28,21 +28,23 @@
 
             <Button
                 android:id="@+id/btnMenu"
-                android:layout_weight=".50"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight=".50"
                 android:onClick="handleBtnMenuOnClick"
                 android:text="@string/btn_menu"
+                android:textAllCaps="false"
                 tools:layout_editor_absoluteX="33dp"
                 tools:layout_editor_absoluteY="139dp" />
 
             <Button
                 android:id="@+id/btnWrite"
-                android:layout_weight=".50"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight=".50"
                 android:onClick="handleBtnWriteOnClick"
                 android:text="@string/btn_write"
+                android:textAllCaps="false"
                 tools:layout_editor_absoluteX="249dp"
                 tools:layout_editor_absoluteY="138dp" />
         </LinearLayout>
