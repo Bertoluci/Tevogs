@@ -16,4 +16,8 @@
     <string name="btn_menu">Menu</string>
     <string name="btn_write">Write</string>
     <string name="btn_last_config">Last config</string>
+    <string name="show_log">Show log</string>
+    <string name="game_over">Game over</string>
+    <string name="visit_website">Visit website</string>
+    <string name="btn_clean">Clean log</string>
 </resources>
