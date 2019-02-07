@@ -27,6 +27,7 @@ import com.aero4te.tevogs.model.CipherKey;
 import com.aero4te.tevogs.model.CipherUtil;
 import com.aero4te.tevogs.model.DistributionType;
 import com.aero4te.tevogs.model.HeaderRecordWrapper;
+import com.aero4te.tevogs.model.MessageWrapper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -79,7 +80,10 @@ public class WriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_write);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        init();
+
+        Intent intent = getIntent();
+        String json = intent.getStringExtra("json");
+        init(json);
         Toast.makeText(this, R.string.approachTag, Toast.LENGTH_LONG).show();
     }
 
@@ -140,18 +144,22 @@ public class WriteActivity extends AppCompatActivity {
     //</editor-fold>
 
     //<editor-fold desc="Private support methods">
-    private void init() {
-        brw = new BodyRecordWrapper(
-                "192.168.10.0",
-                DistributionType.Multicast,
-                "1393",
-                "192.168.10.1",
-                "007",
-                "666",
-                "authkey9876543210",
-                "MyWlan",
-                "wifiSecretPassword"
-        );
+    private void init(String json) {
+        if (json == null) {
+            brw = new BodyRecordWrapper(
+                    "192.168.10.0",
+                    DistributionType.Multicast,
+                    "5555",
+                    "192.168.10.1",
+                    "007",
+                    "666",
+                    "authkey",
+                    "MyWlan",
+                    "wifiPassword"
+            );
+        } else {
+            brw = new MessageWrapper(json).getBodyRecordWrapper();
+        }
 
         authKeyEditText = findViewById (R.id.etAuthKey); {
             authKeyEditText.addTextChangedListener(new TextWatcher() {

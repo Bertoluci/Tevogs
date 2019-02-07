@@ -27,6 +27,7 @@
         </activity>
         <activity android:name=".WriteActivity" android:label="Write Tag" />
         <activity android:name=".ReadActivity" android:label="Read Tag" />
+        <activity android:name=".LastConfigActivity" android:label="Last config" />
     </application>
 
 </manifest>

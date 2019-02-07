@@ -43,4 +43,9 @@ public class MainActivity extends AppCompatActivity {
         Intent readIntent = new Intent(this, ReadActivity.class);
         startActivity(readIntent);
     }
+
+    public void handleBtnLastConfigOnClick(View view) {
+        Intent lastConfigIntent = new Intent(this, LastConfigActivity.class);
+        startActivity(lastConfigIntent);
+    }
 }
