@@ -182,6 +182,20 @@ public class ReadActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState ) {
+        super.onSaveInstanceState(outState);
+        headWebView.saveState(outState);
+        bodyWebView.saveState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        headWebView.restoreState(savedInstanceState);
+        bodyWebView.restoreState(savedInstanceState);
+    }
     //</editor-fold>
 
     //<editor-fold desc="Handlers">
