@@ -27,11 +27,16 @@ import com.aero4te.tevogs.model.CipherKey;
 import com.aero4te.tevogs.model.CipherUtil;
 import com.aero4te.tevogs.model.DistributionType;
 import com.aero4te.tevogs.model.HeaderRecordWrapper;
+import com.aero4te.tevogs.model.InternalStorageUtil;
+import com.aero4te.tevogs.model.KnownFile;
 import com.aero4te.tevogs.model.MessageWrapper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class WriteActivity extends AppCompatActivity {
@@ -130,6 +135,10 @@ public class WriteActivity extends AppCompatActivity {
                 boolean writeResult = writeNdefMessage(tag, ndefMessage);
                 if (writeResult) {
                     Toast.makeText(this, "Tag written!", Toast.LENGTH_SHORT).show();
+                    InternalStorageUtil storage = new InternalStorageUtil(this);
+                    DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
+                    String date = df.format(Calendar.getInstance().getTime());
+                    storage.save(date + "\t[ writing on a tag ]" + System.lineSeparator(), KnownFile.TAG_HISTORY);
                     Intent mainIntent = new Intent(this, MainActivity.class);
                     startActivity(mainIntent);
                 } else {

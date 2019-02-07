@@ -35,7 +35,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 
 public class ReadActivity extends AppCompatActivity {
 
@@ -178,6 +181,10 @@ public class ReadActivity extends AppCompatActivity {
                     String content = messageWrapper.toString();
                     InternalStorageUtil storage = new InternalStorageUtil(this);
                     storage.save(content.toString(), KnownFile.NFC_LAST_CONFIG);
+
+                    DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
+                    String date = df.format(Calendar.getInstance().getTime());
+                    storage.save(date + "\t[ save the last configuration ]" + System.lineSeparator(), KnownFile.TAG_HISTORY);
                 }
             } else {
                 Toast.makeText(this, "Ndef message not found.", Toast.LENGTH_LONG).show();
