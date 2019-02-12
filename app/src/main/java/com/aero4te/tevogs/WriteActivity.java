@@ -95,7 +95,7 @@ public class WriteActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         SecureRandom secureRandom = new SecureRandom();
-//        CipherKey.key = null;
+        CipherKey.key = null;
         if (CipherKey.key == null) {
             CipherKey.key = new byte[16];
             secureRandom.nextBytes(CipherKey.key);

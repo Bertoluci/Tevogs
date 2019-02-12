@@ -38,12 +38,6 @@ public class InternalStorageUtil {
                 dir = folders[0];
                 save(content, filename);
                 break;
-//            case 2:
-//                path = new String[1];
-//                path[0] = folders[0];
-//                dir = folders[1];
-//                save(content, filename);
-//                break;
             default:
                 dir = folders[folders.length - 1];
                 path = new String[folders.length - 1];

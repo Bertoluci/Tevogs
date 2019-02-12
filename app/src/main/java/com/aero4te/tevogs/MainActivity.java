@@ -3,6 +3,7 @@ package com.aero4te.tevogs;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.net.wifi.WifiConfiguration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ReadActivity.wifiConfig = new WifiConfiguration();
+        ReadActivity.wifiConfig.SSID = null;
+        ReadActivity.wifiConfig.preSharedKey = null;
+
         sharedPreferences = getPreferences(MODE_PRIVATE);
         String prefKey = sharedPreferences.getString("key", null);
         if (prefKey != null) {
@@ -43,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return true;
-
     }
 
     @Override
@@ -61,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     private void showLog() {

@@ -1,17 +1,19 @@
 package com.aero4te.tevogs;
 
+import android.Manifest;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiManager;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -25,16 +27,8 @@ import com.aero4te.tevogs.model.HeaderRecordWrapper;
 import com.aero4te.tevogs.model.InternalStorageUtil;
 import com.aero4te.tevogs.model.KnownFile;
 import com.aero4te.tevogs.model.MessageWrapper;
-import com.aero4te.tevogs.model.StorageUtil;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -51,6 +45,13 @@ public class ReadActivity extends AppCompatActivity {
     private NdefRecord bodyNdefRecord = null;
     private NdefRecord aaNdefRecord = null;
     private String aarPackageName = null;
+
+//    private String ssid = null;
+//    private String key = null;
+    public static WifiConfiguration wifiConfig;
+    private int netId;
+    private WifiManager wifiManager;
+    private WifiReceiver broadcastReceiver;
     //</editor-fold>
 
     //<editor-fold desc="Components">
@@ -63,6 +64,20 @@ public class ReadActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
+
+        //<editor-fold desc="Permissions">
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},1);
+        //</editor-fold>
+
+        wifiManager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
+        broadcastReceiver = new WifiReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        registerReceiver(broadcastReceiver, intentFilter);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         headWebView = (WebView) findViewById(R.id.headWebView);
@@ -189,6 +204,16 @@ public class ReadActivity extends AppCompatActivity {
                     DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
                     String date = df.format(Calendar.getInstance().getTime());
                     storage.save(date + "\t[ save the last configuration ]" + System.lineSeparator(), KnownFile.TAG_HISTORY);
+
+                    /************************************************ WiFi **/
+//                    ssid = bodyRecordWrapper.getWifiSSID();
+//                    key = bodyRecordWrapper.getWifiPassword();
+                    wifiConfig = new WifiConfiguration();
+                    wifiConfig.SSID = String.format("\"%s\"", bodyRecordWrapper.getWifiSSID());
+                    wifiConfig.preSharedKey = String.format("\"%s\"", bodyRecordWrapper.getWifiPassword());
+                    reconectToWifiConfig();
+                    /*********************************************** /WiFi **/
+
                 }
             } else {
                 Toast.makeText(this, "Ndef message not found.", Toast.LENGTH_LONG).show();
@@ -225,4 +250,15 @@ public class ReadActivity extends AppCompatActivity {
         startActivity(writeIntent);
     }
     //</editor-fold>
+
+    public void reconectToWifiConfig() {
+        netId = wifiManager.addNetwork(wifiConfig);
+        wifiManager.disconnect();
+        wifiManager.enableNetwork(netId, true);
+        wifiManager.reconnect();
+    }
+
+//    public String getSsid() {
+//        return ssid;
+//    }
 }
